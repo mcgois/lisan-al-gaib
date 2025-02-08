@@ -1,11 +1,12 @@
-export function teste(a: number, b: number) {
-  return a + b;
-}
+import { Command } from 'commander';
 
-export function teste2(a: number, b: number) {
-  return a - b;
-}
+import { init } from './init';
 
-export function teste3(a: number, b: number) {
-  return a * b;
-}
+const program = new Command();
+
+program.name('lisan-al-gaib').description('README generator using LLMs').version('0.0.1');
+
+// init command
+program.command('init').description('Setup configuration').action(init);
+
+program.parse();
