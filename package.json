@@ -13,7 +13,13 @@
   "license": "MIT",
   "devDependencies": {
     "@changesets/cli": "^2.27.12",
+    "@ianvs/prettier-plugin-sort-imports": "^4.4.1",
+    "prettier": "^3.4.2",
     "tsup": "^8.3.6",
     "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "commander": "^13.1.0",
+    "ora": "^8.2.0"
   }
 }
