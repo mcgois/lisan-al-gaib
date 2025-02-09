@@ -13,8 +13,8 @@ export async function dryRun() {
     const data = await fs.readFile('.lisan-al-gaib.yml', 'utf8');
     const configuration = yaml.load(data) as Configuration;
 
-    const includePatterns = configuration['lisan-al-gaib'].includePatterns;
-    const excludePatterns = configuration['lisan-al-gaib'].excludePatterns;
+    const includePatterns = configuration.includePatterns;
+    const excludePatterns = configuration.excludePatterns;
 
     const files = await glob(includePatterns, {
       cwd: process.cwd(),
@@ -28,7 +28,7 @@ export async function dryRun() {
       return;
     }
 
-    spinner.info('Files found:');
+    spinner.info('Files that will be considered:');
     files.forEach((file) => {
       spinner.info(` 📄 ${file}`);
     });
