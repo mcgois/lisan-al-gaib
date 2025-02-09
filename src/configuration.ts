@@ -1,4 +1,12 @@
-export default {
+export type Configuration = {
+  'lisan-al-gaib': {
+    'openai-api-token': string;
+    includePatterns: string[];
+    excludePatterns: string[];
+  };
+};
+
+const configuration: Configuration = {
   'lisan-al-gaib': {
     'openai-api-token': 'YOUR_OPENAI_API_TOKEN',
     includePatterns: [
@@ -25,3 +33,5 @@ export default {
     ],
   },
 };
+
+export default configuration;
