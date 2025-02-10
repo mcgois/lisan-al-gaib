@@ -14,7 +14,7 @@ export async function init() {
   try {
     await fs.writeFile('.lisan-al-gaib.yml', yamlContent);
     spinner.succeed('lisan-al-gaib configuration created');
-  } catch (err) {
+  } catch (_error) {
     spinner.fail('Failed to create lisan-al-gaib configuration');
     return;
   }

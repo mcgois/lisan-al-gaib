@@ -32,7 +32,7 @@ export async function dryRun() {
     files.forEach((file) => {
       spinner.info(` 📄 ${file}`);
     });
-  } catch (error) {
+  } catch (_error) {
     spinner.fail('Failed to read configuration file');
     spinner.stop();
     return;
