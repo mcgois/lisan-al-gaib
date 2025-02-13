@@ -4,10 +4,12 @@ import yaml from 'js-yaml';
 
 import type { Configuration } from './configuration';
 
-export async function loadConfiguration() {
+import { configurationSchema } from './configuration';
+
+export async function loadConfiguration(): Promise<Configuration> {
   const data = await fs.readFile('.lisan-al-gaib.yml', 'utf8');
   const configuration = yaml.load(data) as Configuration;
-  return configuration;
+  return configurationSchema.parse(configuration);
 }
 
 export async function filesToProcess(configuration: Configuration) {
