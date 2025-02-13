@@ -1,6 +1,7 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import ora from 'ora';
+import { ZodError } from 'zod';
 
 import { filesToProcess, loadConfiguration } from './common';
 
@@ -38,6 +39,10 @@ export async function exportContent(outputFile: string) {
     const outputFilePath = path.join(process.cwd(), outputFile);
     await writeFile(outputFilePath, finalResult);
   } catch (_error) {
+    if (_error instanceof ZodError) {
+      spinner.fail('Invalid configuration file');
+    }
+
     spinner.fail('Failed to read configuration file');
     spinner.stop();
     return;

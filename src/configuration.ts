@@ -1,8 +1,12 @@
-export type Configuration = {
-  'openai-api-token': string;
-  includePatterns: string[];
-  excludePatterns: string[];
-};
+import { z } from 'zod';
+
+export const configurationSchema = z.object({
+  'openai-api-token': z.string(),
+  includePatterns: z.array(z.string()).nonempty(),
+  excludePatterns: z.array(z.string()),
+});
+
+export type Configuration = z.infer<typeof configurationSchema>;
 
 const configuration: Configuration = {
   'openai-api-token': 'YOUR_OPENAI_API_TOKEN',

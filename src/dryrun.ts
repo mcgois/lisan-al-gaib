@@ -1,4 +1,5 @@
 import ora from 'ora';
+import { ZodError } from 'zod';
 
 import { filesToProcess, loadConfiguration } from './common';
 
@@ -20,6 +21,10 @@ export async function dryRun() {
       spinner.info(` 📄 ${file}`);
     });
   } catch (_error) {
+    if (_error instanceof ZodError) {
+      spinner.fail('Invalid configuration file');
+    }
+
     spinner.fail('Failed to read configuration file');
     spinner.stop();
     return;
