@@ -1,26 +1,13 @@
-import fs from 'node:fs/promises';
-import { glob } from 'glob';
-import yaml from 'js-yaml';
 import ora from 'ora';
 
-import type { Configuration } from './configuration';
+import { filesToProcess, loadConfiguration } from './common';
 
 export async function dryRun() {
   const spinner = ora('Dry running current configuration').start();
 
   try {
-    spinner.info('Reading configuration file');
-    const data = await fs.readFile('.lisan-al-gaib.yml', 'utf8');
-    const configuration = yaml.load(data) as Configuration;
-
-    const includePatterns = configuration.includePatterns;
-    const excludePatterns = configuration.excludePatterns;
-
-    const files = await glob(includePatterns, {
-      cwd: process.cwd(),
-      nodir: true,
-      ignore: excludePatterns,
-    });
+    const configuration = await loadConfiguration();
+    const files = await filesToProcess(configuration);
 
     if (files.length === 0) {
       spinner.warn('No files found');
@@ -39,4 +26,5 @@ export async function dryRun() {
   }
 
   spinner.succeed('Dry run completed');
+  spinner.stop();
 }
