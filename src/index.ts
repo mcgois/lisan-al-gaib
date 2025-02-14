@@ -1,5 +1,6 @@
 import { Command } from 'commander';
 
+import { aiReadme } from './ai';
 import { dryRun } from './dryrun';
 import { exportContent } from './export';
 import { init } from './init';
@@ -20,5 +21,12 @@ program
   .description('Export content')
   .argument('<output>', 'Output file')
   .action(exportContent);
+
+// export ai readme
+program
+  .command('ai-readme')
+  .description('Generate a README file using AI')
+  .argument('<output>', 'Output file')
+  .action(aiReadme);
 
 program.parse();
