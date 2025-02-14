@@ -1,4 +1,5 @@
-import fs from 'node:fs/promises';
+import fs, { readFile } from 'node:fs/promises';
+import path from 'node:path';
 import { glob } from 'glob';
 import yaml from 'js-yaml';
 
@@ -23,4 +24,32 @@ export async function filesToProcess(configuration: Configuration) {
   });
 
   return files;
+}
+
+export async function readContent(configuration: Configuration) {
+  const files = await filesToProcess(configuration);
+
+  if (files.length === 0) {
+    throw new Error('No files found');
+  }
+
+  const filesContent = await Promise.all(
+    files.map((file) => {
+      const fullPath = path.join(process.cwd(), file);
+      return readFile(fullPath, 'utf8');
+    })
+  );
+
+  const zipedFilenameAndContent = filesContent.map((content, index) => {
+    const fileName = files[index];
+    return { fileName, content };
+  });
+
+  const finalContent = zipedFilenameAndContent
+    .map((f) => {
+      return `File: ${f.fileName}\n\n${f.content}`;
+    })
+    .join('\n');
+
+  return finalContent;
 }
